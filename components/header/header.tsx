@@ -1,14 +1,13 @@
 import { COLORS } from '@/constants';
 import { Feather as Icon } from '@expo/vector-icons';
 import React from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Container } from '../container';
 import { PopupMenu } from './components';
 
 interface Props {
   title?: string;
 }
-const { width } = Dimensions.get('window');
 
 export const Header: React.FC<Props> = ({ title = 'Расписание по группам' }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -41,6 +40,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
     paddingHorizontal: 16,
+    flex: 1,
   },
   titleContsainer: {
     position: 'absolute',

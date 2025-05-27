@@ -8,9 +8,12 @@ const defaultTheme = {
   border: '#D0D0D0',
   dateBackground: '#5c8c6f',
   dateBorder: '#5c8c6f',
+  dateSelectedText: '#edeef0',
+  dayTextColor: '#50494f',
   dayPrimary: dafaultThemeDayPrimary,
   groupPrimary: defaultThemeGroupPrimary,
   blackOutOverlay: 'black',
+  groupText: '#000000',
 };
 
 const darkTheme = {};
