@@ -23,10 +23,11 @@ const style = StyleSheet.create({
     borderRadius: 6,
     borderColor: COLORS.dateBorder,
     borderWidth: 1,
+    alignItems: 'center',
   },
   text: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
     fontSize: 16,
   },
 });

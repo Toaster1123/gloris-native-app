@@ -1,4 +1,4 @@
-import { Header } from '@/components';
+import { Header, StoreLoader } from '@/components';
 import { COLORS } from '@/constants';
 import { Feather } from '@expo/vector-icons';
 import * as Font from 'expo-font';
@@ -41,6 +41,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primary }}>
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+          <StoreLoader />
           <Header />
           <Stack screenOptions={{ headerShown: false }} />
         </View>

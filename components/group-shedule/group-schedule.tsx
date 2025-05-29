@@ -1,52 +1,36 @@
-import { TScheduleData } from '@/@types';
-import { fetchScheduleData } from '@/lib';
+import { useScheduleData } from '@/hooks';
 import React from 'react';
-import { Alert, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { FlatList, RefreshControl, SafeAreaView, StyleSheet, View } from 'react-native';
+import { LoadingItem } from '../loading-item';
 import { GroupScheduleItem } from './components/group-schedule-item';
 
 export const GroupSchedule = () => {
-  const [scheduleData, setScheduleData] = React.useState<TScheduleData[]>();
-  const [isLoading, setIsLoading] = React.useState(true);
-  const fetchData = React.useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const data = await fetchScheduleData();
-      setScheduleData(data);
-    } catch (error) {
-      const err: Error = error as Error;
-      Alert.alert('Произошла ошибка', err.message);
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
+  const { isLoading, scheduleData, refetch } = useScheduleData();
   if (isLoading) {
-    return (
-      <View>
-        <Text>Загрузка...</Text>
-      </View>
-    );
+    return <LoadingItem />;
   }
   return (
-    <View style={style.mainBlock}>
+    <SafeAreaView style={style.mainBlock}>
       <FlatList
-        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchData} />}
+        contentContainerStyle={{ paddingTop: 12 }}
+        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}
         data={scheduleData}
         renderItem={({ item }) => (
-          <GroupScheduleItem groupName={item.groupName} schedule={item.schedule} />
+          <GroupScheduleItem
+            groupId={item.groupId}
+            groupName={item.groupName}
+            schedule={item.schedule}
+          />
         )}
+        ListFooterComponent={() => <View style={{ height: 30 }} />}
         ItemSeparatorComponent={() => <View style={{ height: 24 }} />}
+        keyExtractor={(item) => item.groupName}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 const style = StyleSheet.create({
   mainBlock: {
-    marginTop: 12,
+    flex: 1,
   },
 });

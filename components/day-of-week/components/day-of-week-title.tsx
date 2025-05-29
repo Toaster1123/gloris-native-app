@@ -1,10 +1,14 @@
 import { Container } from '@/components';
-import { COLORS } from '@/constants';
+import { COLORS, dayOfWeekConstant } from '@/constants';
 import { TDayOfWeek } from '@/constants/collors/default-collors';
+import { useDayChoseStore } from '@/store';
 import { StyleSheet, Text, View } from 'react-native';
 
 export const DayOfWeekTitle = () => {
-  const day: TDayOfWeek = 'Понедельник';
+  const dayIndexChoise = useDayChoseStore((state) => state.dayIndexChoise);
+  const day = (dayOfWeekConstant.find((day) => day.id === dayIndexChoise)?.fullDay ||
+    1) as TDayOfWeek;
+
   return (
     <View style={{ backgroundColor: COLORS.dayPrimary[day] }}>
       <Container>

@@ -20,7 +20,7 @@ export const defaultThemeGroupPrimary = {
   МЭП: defaultThemeGroupPrimatyCollors.MEP,
   П: defaultThemeGroupPrimatyCollors.programmer,
   СЛ: defaultThemeGroupPrimatyCollors.mechanics,
-  T: defaultThemeGroupPrimatyCollors.mechanics,
+  Т: defaultThemeGroupPrimatyCollors.mechanics,
   ТМ: defaultThemeGroupPrimatyCollors.mechanics,
   ТЭ: defaultThemeGroupPrimatyCollors.electricians,
   МПО: defaultThemeGroupPrimatyCollors.mechanics,
