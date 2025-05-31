@@ -1,5 +1,5 @@
 import { TScheduleData } from '@/@types';
-import { fetchScheduleData } from '@/lib';
+import { fetchScheduleData, splitGroupName } from '@/lib';
 import { useDayChoseStore } from '@/store';
 import React from 'react';
 import { Alert } from 'react-native';
@@ -16,7 +16,12 @@ export const useScheduleData = (groupId?: string) => {
         day: dayIndexChoise.toString(),
         group: groupId,
       });
-      setScheduleData(data);
+      const sortedData = data.sort(
+        (a, b) =>
+          Number(splitGroupName(a.groupName).groupCode) -
+          Number(splitGroupName(b.groupName).groupCode),
+      );
+      setScheduleData(sortedData);
     } catch (error) {
       const err: Error = error as Error;
       Alert.alert('Произошла ошибка', err.message);

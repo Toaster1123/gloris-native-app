@@ -1,6 +1,6 @@
 import { Container, GroupNameContainer, GroupScheduleList } from '@/components';
 import { COLORS, SCHEDULEBORDER } from '@/constants';
-import { TGroupName } from '@/constants/collors/default-collors';
+import { splitGroupName } from '@/lib';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -17,7 +17,7 @@ export const GroupScheduleItem: React.FC<Props> = ({
   schedule,
   groupId,
 }) => {
-  const groupShortName = groupName.split(' ')[0].toUpperCase() as TGroupName;
+  const groupShortName = splitGroupName(groupName).groupShortName;
   return (
     <Container propStyles={{ flex: 1 }}>
       <View

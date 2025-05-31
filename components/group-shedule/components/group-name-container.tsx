@@ -25,10 +25,7 @@ export const GroupNameContainer: React.FC<Props> = ({
         </View>
       ) : (
         <Link href={`/group/${groupId}`} asChild>
-          <TouchableOpacity
-            onPress={() => {
-              console.log(groupId);
-            }}>
+          <TouchableOpacity>
             <View
               style={[
                 style.groupContainer,

@@ -1,4 +1,6 @@
 import { COLORS } from '@/constants';
+import { useScheduleData } from '@/hooks';
+import { splitGroupName } from '@/lib';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import { PopupTextItem } from './popup-text-item';
 
@@ -8,6 +10,7 @@ interface Props {
 const { width } = Dimensions.get('window');
 const animateWidth = width / 2;
 export const PopupTextContainer: React.FC<Props> = ({ slideAnim }) => {
+  const { isLoading, scheduleData } = useScheduleData();
   return (
     <Animated.View
       style={[
@@ -19,10 +22,33 @@ export const PopupTextContainer: React.FC<Props> = ({ slideAnim }) => {
       <View>
         <PopupTextItem text="Все группы" />
         <View style={style.yearBlock}>
-          <PopupTextItem text="1 курс" />
-          <PopupTextItem text="2 курс" />
-          <PopupTextItem text="3 курс" />
-          <PopupTextItem text="4 курс" />
+          {isLoading
+            ? null
+            : scheduleData.map((item, id) => {
+                if (id === 0) {
+                  return (
+                    <>
+                      <PopupTextItem key={item.groupName + id} text="1 курс" />
+                      <PopupTextItem key={item.groupName} text={item.groupName} />
+                    </>
+                  );
+                }
+                if (
+                  Number(splitGroupName(scheduleData[id - 1].groupName).groupCode[0]) <
+                  Number(splitGroupName(item.groupName).groupCode[0])
+                ) {
+                  return (
+                    <>
+                      <PopupTextItem
+                        key={item.groupName + id}
+                        text={`${splitGroupName(item.groupName).groupCode[0]} курс`}
+                      />
+                      <PopupTextItem key={item.groupName} text={item.groupName} />
+                    </>
+                  );
+                }
+                return <PopupTextItem key={item.groupName} text={item.groupName} />;
+              })}
         </View>
         <View>
           <PopupTextItem text="Твое расписание" />
