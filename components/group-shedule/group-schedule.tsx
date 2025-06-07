@@ -1,8 +1,9 @@
+import { COLORS } from '@/constants';
 import { useScheduleData } from '@/hooks';
 import React from 'react';
 import { FlatList, RefreshControl, SafeAreaView, StyleSheet, View } from 'react-native';
 import { LoadingItem } from '../loading-item';
-import { GroupScheduleItem } from './components/group-schedule-item';
+import { GroupScheduleItem } from './components';
 
 export const GroupSchedule = () => {
   const { isLoading, scheduleData, refetch } = useScheduleData();
@@ -32,5 +33,6 @@ export const GroupSchedule = () => {
 const style = StyleSheet.create({
   mainBlock: {
     flex: 1,
+    backgroundColor: COLORS.background,
   },
 });

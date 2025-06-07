@@ -1,6 +1,6 @@
 import { COLORS } from '@/constants';
 import React from 'react';
-import { StyleProp, StyleSheet, Text, TextStyle } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 
 interface Props {
   text: string;
@@ -8,12 +8,22 @@ interface Props {
 }
 
 export const PopupTextItem: React.FC<Props> = ({ text, classname }) => {
-  return <Text style={[style.text, classname]}>{text}</Text>;
+  return (
+    <View style={style.mainContainer}>
+      <Text style={[style.text, classname]}>{text}</Text>
+    </View>
+  );
 };
 
 const style = StyleSheet.create({
+  mainContainer: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 8,
+  },
   text: {
-    color: COLORS.textPrimary,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    color: COLORS.dateSelectedText,
     fontSize: 16,
     fontWeight: 400,
   },

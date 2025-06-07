@@ -1,6 +1,6 @@
 import { Container } from '@/components';
 import { COLORS, dayOfWeekConstant } from '@/constants';
-import { TDayOfWeek } from '@/constants/collors/default-collors';
+import { TDayOfWeek } from '@/constants/collors/default-theme-collors';
 import { useDayChoseStore } from '@/store';
 import { StyleSheet, Text, View } from 'react-native';
 

@@ -1,4 +1,5 @@
 import { DayOfWeek, DayOfWeekTitle, GroupScheduleItem, LoadingItem } from '@/components';
+import { COLORS } from '@/constants';
 import { useScheduleData } from '@/hooks';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
@@ -14,7 +15,7 @@ export default function GroupPage() {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
       <DayOfWeek />
       <DayOfWeekTitle />
       <GroupScheduleItem

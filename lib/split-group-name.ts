@@ -1,4 +1,4 @@
-import { TGroupName } from '@/constants/collors/default-collors';
+import { TGroupName } from '@/constants/collors/default-theme-collors';
 
 export const splitGroupName = (groupName: string) => {
   const splitedGropName = groupName.split(' ');

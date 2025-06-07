@@ -1,4 +1,4 @@
-import { dayOfWeekConstant } from '@/constants';
+import { COLORS, dayOfWeekConstant } from '@/constants';
 import { TDayIndex } from '@/constants/day-of-weeks-constant';
 import { useDayChoseStore } from '@/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,7 +31,8 @@ export const DayOfWeek: React.FC = () => {
 
 const style = StyleSheet.create({
   mainBlock: {
-    marginVertical: 16,
+    paddingVertical: 16,
+    backgroundColor: COLORS.background,
   },
   container: {
     flexDirection: 'row',

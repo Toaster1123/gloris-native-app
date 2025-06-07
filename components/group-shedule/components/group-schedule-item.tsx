@@ -1,4 +1,4 @@
-import { Container, GroupNameContainer, GroupScheduleList } from '@/components';
+import { Container, GroupNameContainer, GroupScheduleListSelector } from '@/components';
 import { COLORS, SCHEDULEBORDER } from '@/constants';
 import { splitGroupName } from '@/lib';
 import React from 'react';
@@ -23,7 +23,7 @@ export const GroupScheduleItem: React.FC<Props> = ({
       <View
         style={[
           {
-            borderColor: COLORS.groupPrimary[groupShortName],
+            borderColor: COLORS.groupBorder[groupShortName],
             borderWidth: SCHEDULEBORDER.main,
             marginTop: isGroupPage ? 12 : 0,
           },
@@ -34,7 +34,7 @@ export const GroupScheduleItem: React.FC<Props> = ({
           groupId={groupId}
           groupShortName={groupShortName}
         />
-        <GroupScheduleList groupShortName={groupShortName} schedule={schedule} />
+        <GroupScheduleListSelector groupShortName={groupShortName} schedule={schedule} />
       </View>
     </Container>
   );

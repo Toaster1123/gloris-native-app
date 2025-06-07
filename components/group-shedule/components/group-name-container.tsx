@@ -1,5 +1,5 @@
 import { COLORS } from '@/constants';
-import { TGroupName } from '@/constants/collors/default-collors';
+import { TGroupName } from '@/constants/collors/default-theme-collors';
 import { Link } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -20,7 +20,7 @@ export const GroupNameContainer: React.FC<Props> = ({
     <>
       {isGroupPage ? (
         <View
-          style={[style.groupContainer, { backgroundColor: COLORS.groupPrimary[groupShortName] }]}>
+          style={[style.groupContainer, { backgroundColor: COLORS.groupTitle[groupShortName] }]}>
           <Text style={style.groupText}>{groupName}</Text>
         </View>
       ) : (
@@ -29,7 +29,7 @@ export const GroupNameContainer: React.FC<Props> = ({
             <View
               style={[
                 style.groupContainer,
-                { backgroundColor: COLORS.groupPrimary[groupShortName] },
+                { backgroundColor: COLORS.groupTitle[groupShortName] },
               ]}>
               <Text style={style.groupText}>{groupName}</Text>
             </View>
