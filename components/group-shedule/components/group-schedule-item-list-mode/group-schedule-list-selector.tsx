@@ -1,14 +1,17 @@
-import { TGroupViewMode } from '@/@types';
+import { TGroupSchedule, TGroupViewMode } from '@/@types';
 import { TGroupName } from '@/constants';
+import { useSettingsStore } from '@/store';
 import { GroupScheduleListAdvanced } from './group-schedule-list-advanced';
 import { GroupScheduleListDefault } from './group-schedule-list-default';
 
 interface Props {
   groupShortName: TGroupName;
-  schedule: string[];
+  schedule: TGroupSchedule;
 }
 export const GroupScheduleListSelector: React.FC<Props> = ({ groupShortName, schedule }) => {
-  const mode: TGroupViewMode = 'advanced';
+  const selectedMode = useSettingsStore.getState().settings.group_mode;
+
+  const mode: TGroupViewMode = selectedMode === 'Обычный' ? 'default' : 'advanced';
 
   switch (mode) {
     case 'advanced':

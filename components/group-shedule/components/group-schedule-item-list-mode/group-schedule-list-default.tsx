@@ -1,11 +1,16 @@
-import { COLORS, SCHEDULEBORDER } from '@/constants';
+import { TGroupSchedule } from '@/@types';
+import { getColors, SCHEDULEBORDER } from '@/constants';
 import { TGroupName } from '@/constants/collors/default-theme-collors';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { styleGroupListDafault } from '../../styles';
 interface Props {
-  schedule: string[];
+  schedule: TGroupSchedule;
   groupShortName: TGroupName;
 }
 export const GroupScheduleListDefault: React.FC<Props> = ({ schedule, groupShortName }) => {
+  const COLORS = getColors();
+  const style = styleGroupListDafault(COLORS);
+
   return (
     <View>
       {schedule.map((item, id) => (
@@ -24,16 +29,3 @@ export const GroupScheduleListDefault: React.FC<Props> = ({ schedule, groupShort
     </View>
   );
 };
-const style = StyleSheet.create({
-  scheduleItemContainer: {
-    paddingVertical: 8,
-    alignItems: 'center',
-  },
-  scheduleItemContainerText: {
-    color: COLORS.groupText,
-    fontSize: 16,
-    alignItems: 'center',
-    fontWeight: 400,
-    paddingVertical: 4,
-  },
-});

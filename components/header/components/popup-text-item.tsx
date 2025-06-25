@@ -1,30 +1,23 @@
-import { COLORS } from '@/constants';
+import { THrefLinks } from '@/@types';
+import { getColors } from '@/constants';
+import { Link } from 'expo-router';
 import React from 'react';
-import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
+import { StyleProp, Text, TextStyle, TouchableOpacity } from 'react-native';
+import { stylePopupTextItem } from '../styles';
 
 interface Props {
+  href: THrefLinks;
   text: string;
   classname?: StyleProp<TextStyle>;
 }
-
-export const PopupTextItem: React.FC<Props> = ({ text, classname }) => {
+export const PopupTextItem: React.FC<Props> = ({ text, href, classname }) => {
+  const COLORS = getColors();
+  const style = stylePopupTextItem(COLORS);
   return (
-    <View style={style.mainContainer}>
-      <Text style={[style.text, classname]}>{text}</Text>
-    </View>
+    <Link href={`${href}`} asChild>
+      <TouchableOpacity activeOpacity={0.7} style={style.mainContainer}>
+        <Text style={[style.text, classname]}>{text}</Text>
+      </TouchableOpacity>
+    </Link>
   );
 };
-
-const style = StyleSheet.create({
-  mainContainer: {
-    backgroundColor: COLORS.primary,
-    borderRadius: 8,
-  },
-  text: {
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    color: COLORS.dateSelectedText,
-    fontSize: 16,
-    fontWeight: 400,
-  },
-});

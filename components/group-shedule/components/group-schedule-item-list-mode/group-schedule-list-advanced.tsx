@@ -1,9 +1,11 @@
-import { COLORS, SCHEDULEBORDER, scheduleTime } from '@/constants';
+import { TGroupSchedule } from '@/@types';
+import { getColors, SCHEDULEBORDER, scheduleTime } from '@/constants';
 import { TGroupName } from '@/constants/collors/default-theme-collors';
 import { parseSubject } from '@/lib';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { styleGroupListAdvanced } from '../../styles';
 interface Props {
-  schedule: string[];
+  schedule: TGroupSchedule;
   groupShortName: TGroupName;
 }
 type ScheduleItem = {
@@ -13,8 +15,9 @@ type ScheduleItem = {
 };
 
 const formatTime = (start: string, end: string) => `${start} - ${end}`;
-
 export const GroupScheduleListAdvanced: React.FC<Props> = ({ schedule, groupShortName }) => {
+  const COLORS = getColors();
+  const style = styleGroupListAdvanced(COLORS);
   const advancedSchedule = schedule.reduce<ScheduleItem[]>((acc, item, index) => {
     const { cabinet, name } = parseSubject(item);
     if (name && name === '-') return acc;
@@ -62,18 +65,3 @@ export const GroupScheduleListAdvanced: React.FC<Props> = ({ schedule, groupShor
     </View>
   );
 };
-const style = StyleSheet.create({
-  scheduleItemContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  scheduleItemContainerText: {
-    color: COLORS.groupText,
-    fontSize: 16,
-  },
-  cabContainter: {
-    gap: 8,
-  },
-});

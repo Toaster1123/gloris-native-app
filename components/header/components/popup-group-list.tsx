@@ -1,20 +1,22 @@
 import { TListGroupName } from '@/@types';
-import React from 'react';
+import { getColors } from '@/constants';
+import { Link, usePathname } from 'expo-router';
+import React, { useEffect } from 'react';
 import { Animated, Text, TouchableOpacity, View } from 'react-native';
 import { styleGropList } from '../styles';
-import { AnimatedIcon } from './animated-icon';
-import { LoadingPlaceholder } from './loading-placeholder';
+import { AnimatedIcon } from './animated-components';
 
-interface Props extends TListGroupName {
-  isLoading: boolean;
-}
-
-export const PopupGroupList: React.FC<Props> = ({ year, isLoading, groups }) => {
-  const animateHeight = groups.length * 24 + 4;
+export const PopupGroupList: React.FC<TListGroupName> = ({ year, groups }) => {
+  const animateHeight = groups.length * 26;
   const duration = 100;
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
   const rotateAnim = React.useRef(new Animated.Value(0)).current;
   const heightAnim = React.useRef(new Animated.Value(0)).current;
+
+  const pathname = usePathname();
+  useEffect(() => {
+    setIsPopupOpen(false);
+  }, [pathname]);
 
   const toglePopup = () => {
     Animated.parallel([
@@ -31,24 +33,21 @@ export const PopupGroupList: React.FC<Props> = ({ year, isLoading, groups }) => 
     ]).start();
     setIsPopupOpen((prev) => !prev);
   };
-  if (true) {
-    return <LoadingPlaceholder />;
-  }
+  const COLORS = getColors();
+  const style = styleGropList(COLORS);
+
   return (
-    <View style={styleGropList.mainContainer}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={toglePopup}
-        style={styleGropList.titleContainer}>
-        <Text style={styleGropList.title}>{year} курс</Text>
+    <View>
+      <TouchableOpacity activeOpacity={0.7} onPress={toglePopup} style={style.titleContainer}>
+        <Text style={style.title}>{year} курс</Text>
         <AnimatedIcon rotateAnim={rotateAnim} />
       </TouchableOpacity>
       <Animated.View style={{ overflow: 'hidden', height: heightAnim }}>
-        <View style={[styleGropList.groupContainer]}>
+        <View style={[style.groupContainer]}>
           {groups.map((item, id) => (
-            <Text style={styleGropList.groupText} key={id}>
-              {item.groupName}
-            </Text>
+            <Link style={style.groupText} href={`/group/${item.groupId}`} key={id}>
+              <Text>{item.groupName}</Text>
+            </Link>
           ))}
         </View>
       </Animated.View>

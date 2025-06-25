@@ -1,1 +1,1 @@
-export type TListGroupName = { year: string; groups: { groupName: string; groupId: string }[] };
+export type TListGroupName = { year: number; groups: { groupName: string; groupId: string }[] };

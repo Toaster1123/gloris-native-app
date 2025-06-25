@@ -1,38 +1,34 @@
-import { COLORS } from '@/constants';
+import { getColors } from '@/constants';
 import { useScheduleData } from '@/hooks';
 import React from 'react';
-import { FlatList, RefreshControl, SafeAreaView, StyleSheet, View } from 'react-native';
+import { FlatList, RefreshControl, SafeAreaView, View } from 'react-native';
 import { LoadingItem } from '../loading-item';
 import { GroupScheduleItem } from './components';
 
 export const GroupSchedule = () => {
+  const COLORS = getColors();
   const { isLoading, scheduleData, refetch } = useScheduleData();
-  if (isLoading) {
+
+  if (isLoading || !scheduleData) {
     return <LoadingItem />;
   }
   return (
-    <SafeAreaView style={style.mainBlock}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
       <FlatList
         contentContainerStyle={{ paddingTop: 12 }}
         refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}
         data={scheduleData}
         renderItem={({ item }) => (
           <GroupScheduleItem
-            groupId={item.groupId}
-            groupName={item.groupName}
-            schedule={item.schedule}
+            groupId={item[0].id.toString()}
+            groupName={item[0].title}
+            schedule={item[1]}
           />
         )}
         ListFooterComponent={() => <View style={{ height: 30 }} />}
         ItemSeparatorComponent={() => <View style={{ height: 24 }} />}
-        keyExtractor={(item) => item.groupName}
+        keyExtractor={(item) => item[0].id.toString()}
       />
     </SafeAreaView>
   );
 };
-const style = StyleSheet.create({
-  mainBlock: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-  },
-});

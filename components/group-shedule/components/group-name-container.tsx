@@ -1,4 +1,4 @@
-import { COLORS } from '@/constants';
+import { getColors } from '@/constants';
 import { TGroupName } from '@/constants/collors/default-theme-collors';
 import { Link } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -16,6 +16,19 @@ export const GroupNameContainer: React.FC<Props> = ({
   groupId,
   groupShortName,
 }) => {
+  const COLORS = getColors();
+  const style = StyleSheet.create({
+    groupContainer: {
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+    },
+    groupText: {
+      color: COLORS.textSecondary,
+      fontSize: 20,
+      textAlign: 'center',
+      fontWeight: 600,
+    },
+  });
   return (
     <>
       {isGroupPage ? (
@@ -39,16 +52,3 @@ export const GroupNameContainer: React.FC<Props> = ({
     </>
   );
 };
-
-const style = StyleSheet.create({
-  groupContainer: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-  },
-  groupText: {
-    color: COLORS.textSecondary,
-    fontSize: 20,
-    textAlign: 'center',
-    fontWeight: 600,
-  },
-});

@@ -1,5 +1,5 @@
 import { TScheduleData } from '@/@types';
-import { fetchScheduleData, splitGroupName } from '@/lib';
+import { fetchScheduleData } from '@/lib';
 import { useDayChoseStore } from '@/store';
 import React from 'react';
 import { Alert } from 'react-native';
@@ -7,8 +7,7 @@ import { Alert } from 'react-native';
 export const useScheduleData = (groupId?: string) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [scheduleData, setScheduleData] = React.useState<TScheduleData[]>([]);
-  const { dayIndexChoise, isInitialized } = useDayChoseStore((state) => state);
-
+  const { dayIndexChoise } = useDayChoseStore((state) => state);
   const fetchData = React.useCallback(async () => {
     setIsLoading(true);
     try {
@@ -16,12 +15,7 @@ export const useScheduleData = (groupId?: string) => {
         day: dayIndexChoise.toString(),
         group: groupId,
       });
-      const sortedData = data.sort(
-        (a, b) =>
-          Number(splitGroupName(a.groupName).groupCode) -
-          Number(splitGroupName(b.groupName).groupCode),
-      );
-      setScheduleData(sortedData);
+      setScheduleData(data);
     } catch (error) {
       const err: Error = error as Error;
       Alert.alert('Произошла ошибка', err.message);
@@ -32,8 +26,8 @@ export const useScheduleData = (groupId?: string) => {
   }, [dayIndexChoise, groupId]);
 
   React.useEffect(() => {
-    if (isInitialized) fetchData();
-  }, [isInitialized, dayIndexChoise]);
+    fetchData();
+  }, [dayIndexChoise]);
 
   return { scheduleData, isLoading, refetch: fetchData };
 };

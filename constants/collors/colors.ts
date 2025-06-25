@@ -1,7 +1,9 @@
+import { TColors } from '@/@types';
+import { useSettingsStore } from '@/store';
 import { darkThemeDayPrimary, darkThemeGroupPrimary } from './dark-theme-collors';
 import { dafaultThemeDayPrimary, defaultThemeGroupPrimary } from './default-theme-collors';
 
-const defaultTheme = {
+const defaultTheme: TColors = {
   primary: '#417690',
   background: '#edeef0',
   textPrimary: '#000000',
@@ -13,11 +15,14 @@ const defaultTheme = {
   dayPrimary: dafaultThemeDayPrimary,
   groupTitle: defaultThemeGroupPrimary,
   groupBorder: defaultThemeGroupPrimary,
-  blackOutOverlay: 'black',
+  blackOutOverlay: 'rgba(0, 0, 0, 0.8)',
   groupText: '#000000',
+  settingsSelected: '#5d5d5d',
+  settungsBackground: '#cfcfcf',
+  settingsContainer: '#edeef0',
 };
 
-const darkTheme = {
+const darkTheme: TColors = {
   primary: '#101010',
   background: '#1c1c1c',
   textPrimary: '#D7D7D7',
@@ -29,22 +34,20 @@ const darkTheme = {
   dayPrimary: darkThemeDayPrimary,
   groupTitle: darkThemeGroupPrimary,
   groupBorder: darkThemeGroupPrimary,
-  blackOutOverlay: 'rgba(0, 0, 0, 0.7)',
+  blackOutOverlay: 'rgba(0, 0, 0, 0.8)',
   groupText: '#D7D7D7',
+  settingsSelected: '#898989',
+  settungsBackground: '#101010',
+  settingsContainer: '#1c1c1c',
 };
 
-const lightTheme = {
-  ...defaultTheme,
-};
-
-const darkDefaultTheme = {
-  ...darkTheme,
-};
 export const THEMES = {
   default: defaultTheme,
-  darkDefault: darkDefaultTheme,
   dark: darkTheme,
-  light: lightTheme,
 };
 
 export const COLORS = THEMES.dark;
+export const getColors = () => {
+  const theme = useSettingsStore.getState().settings.theme;
+  return theme === 'Обычная' ? THEMES.default : THEMES.dark;
+};

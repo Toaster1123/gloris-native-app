@@ -1,19 +1,25 @@
-import { Header, StoreLoader } from '@/components';
-import { COLORS } from '@/constants';
+import { Header, PopupOverlay } from '@/components';
+import { getColors } from '@/constants';
+import { useSettingsStore } from '@/store';
 import { Feather } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
+import { Host } from 'react-native-portalize';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const COLORS = getColors();
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const { initSettings } = useSettingsStore();
 
   useEffect(() => {
+    initSettings();
+
     async function loadFonts() {
       try {
         await Font.loadAsync({
@@ -40,11 +46,13 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primary }}>
-        <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-          <StoreLoader />
-          <Header />
-          <Stack screenOptions={{ headerShown: false }} />
-        </View>
+        <Host>
+          <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+            <Header />
+            <Stack screenOptions={{ headerShown: false, statusBarStyle: 'light' }} />
+            <PopupOverlay />
+          </View>
+        </Host>
       </SafeAreaView>
     </SafeAreaProvider>
   );

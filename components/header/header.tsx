@@ -1,33 +1,45 @@
-import { COLORS } from '@/constants';
+import { getColors } from '@/constants';
+import { popupOverlayStore } from '@/store';
 import { Feather as Icon } from '@expo/vector-icons';
+import { usePathname } from 'expo-router';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Container } from '../container';
-import { PopupMenu } from './components';
-import { styleHeader } from './styles';
+import { LoadingTitle, PopupTextContainer } from './components';
+import { createHeaderStyles } from './styles';
+export const Header: React.FC = () => {
+  const COLORS = getColors();
+  const styleHeader = createHeaderStyles(COLORS);
+  const [isOpenPopup, setIsOpenPopup] = React.useState(false);
+  const { closeOverlay, openOverlay, isActiveOverlay } = popupOverlayStore((state) => state);
+  const pathname = usePathname();
+  const handleClose = () => {
+    closeOverlay();
+    setIsOpenPopup(false);
+  };
+  const handleOpen = () => {
+    openOverlay();
+    setIsOpenPopup(true);
+  };
+  React.useEffect(() => {
+    if (!isActiveOverlay) {
+      setIsOpenPopup(false);
+    }
+  }, [isActiveOverlay]);
 
-interface Props {
-  title?: string;
-}
-
-export const Header: React.FC<Props> = ({ title = 'Расписание по группам' }) => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  React.useEffect(handleClose, [pathname]);
 
   return (
     <>
       <View style={styleHeader.mainContainer}>
         <Container propStyles={styleHeader.container}>
-          <TouchableOpacity
-            style={styleHeader.menuButton}
-            onPress={() => setIsMenuOpen((prev) => !prev)}>
+          <TouchableOpacity style={styleHeader.menuButton} onPress={handleOpen}>
             <Icon name="menu" size={36} color={COLORS.textSecondary} />
           </TouchableOpacity>
-          <View style={styleHeader.titleContsainer}>
-            <Text style={styleHeader.title}>{title}</Text>
-          </View>
+          <LoadingTitle />
         </Container>
       </View>
-      <PopupMenu isOpenMenu={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <PopupTextContainer isOpenPopup={isOpenPopup} />
     </>
   );
 };

@@ -1,0 +1,18 @@
+export type TColors = {
+  primary: string;
+  background: string;
+  textPrimary: string;
+  textSecondary: string;
+  dateBackground: string;
+  dateBorder: string;
+  dateSelectedText: string;
+  dayTextColor: string;
+  dayPrimary: Record<string, string>;
+  groupTitle: Record<string, string>;
+  groupBorder: Record<string, string>;
+  blackOutOverlay: string;
+  groupText: string;
+  settingsSelected: string;
+  settungsBackground: string;
+  settingsContainer: string;
+};

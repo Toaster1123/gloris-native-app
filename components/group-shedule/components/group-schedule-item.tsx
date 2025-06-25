@@ -1,5 +1,6 @@
+import { TGroupSchedule } from '@/@types';
 import { Container, GroupNameContainer, GroupScheduleListSelector } from '@/components';
-import { COLORS, SCHEDULEBORDER } from '@/constants';
+import { getColors, SCHEDULEBORDER } from '@/constants';
 import { splitGroupName } from '@/lib';
 import React from 'react';
 import { View } from 'react-native';
@@ -7,10 +8,9 @@ import { View } from 'react-native';
 interface Props {
   isGroupPage?: boolean;
   groupName: string;
-  schedule: string[];
+  schedule: TGroupSchedule;
   groupId: string;
 }
-
 export const GroupScheduleItem: React.FC<Props> = ({
   isGroupPage = false,
   groupName,
@@ -18,6 +18,7 @@ export const GroupScheduleItem: React.FC<Props> = ({
   groupId,
 }) => {
   const groupShortName = splitGroupName(groupName).groupShortName;
+  const COLORS = getColors();
   return (
     <Container propStyles={{ flex: 1 }}>
       <View

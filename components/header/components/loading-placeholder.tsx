@@ -1,31 +1,44 @@
+import { getColors } from '@/constants';
 import { AntDesign as Icon } from '@expo/vector-icons';
 import { useEffect, useRef } from 'react';
-import { Animated, View } from 'react-native';
-import { styleGropList } from '../styles';
+import { Animated, Easing, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+interface Props {
+  propStyles?: StyleProp<ViewStyle>;
+}
 
-export const LoadingPlaceholder = () => {
+export const LoadingPlaceholder: React.FC<Props> = ({ propStyles }) => {
+  const COLORS = getColors();
   const rotateAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.loop(
       Animated.timing(rotateAnim, {
         toValue: 1,
-        duration: 1700,
+        duration: 900,
         useNativeDriver: true,
+        easing: Easing.linear,
       }),
     ).start();
-  }, [rotateAnim]);
+  }, []);
   const rotate = rotateAnim.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   });
+  const style = StyleSheet.create({
+    loadingPlaceholder: {
+      height: 40,
+      marginVertical: 4,
+      borderRadius: 8,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
+
   return (
-    <View style={styleGropList.loadingPlaceholder}>
-      <View>
-        <Animated.View style={{ transform: [{ rotate }] }}>
-          <Icon name="loading1" size={24} color="#fff" />
-        </Animated.View>
-      </View>
+    <View style={[style.loadingPlaceholder, propStyles]}>
+      <Animated.View style={{ transform: [{ rotate }] }}>
+        <Icon name="loading1" size={24} color="#fff" />
+      </Animated.View>
     </View>
   );
 };
