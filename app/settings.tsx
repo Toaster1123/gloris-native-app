@@ -1,4 +1,4 @@
-import { SettingsSelector } from '@/components';
+import { SettingsSelector, SettingsVersion } from '@/components';
 import { getColors } from '@/constants';
 import { useHeaderTitleStore, useSettingsStore } from '@/store';
 import { useFocusEffect } from 'expo-router';
@@ -18,6 +18,7 @@ export default function SettingsPage() {
   return (
     <View style={{ backgroundColor: COLORS.settungsBackground, flex: 1 }}>
       <SettingsSelector />
+      <SettingsVersion />
     </View>
   );
 }

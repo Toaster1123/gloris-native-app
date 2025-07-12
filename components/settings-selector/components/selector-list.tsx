@@ -1,4 +1,4 @@
-import TSettingsKeys from '@/@types';
+import { TParams } from '@/@types';
 import { Container, SelectorListRenderItems } from '@/components';
 import { getColors } from '@/constants';
 import { useSettingsStore } from '@/store';
@@ -9,17 +9,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styleSelectorList } from '../styles';
 
 interface Props {
-  selectedOptions: {
-    title: string;
-    options: string[];
-    storeKey: TSettingsKeys;
-  } | null;
+  selectedOptions: TParams | null;
   onClose: () => void;
   isOpen: boolean;
 }
 const duration = 200;
 export const SelectorList: React.FC<Props> = ({ selectedOptions, onClose, isOpen }) => {
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState<{ name: string; value: string | null } | null>(
+    null,
+  );
   const screenHeight = Dimensions.get('window').height;
   const slideAnim = useRef(new Animated.Value(screenHeight)).current;
   const insets = useSafeAreaInsets();
@@ -28,7 +26,7 @@ export const SelectorList: React.FC<Props> = ({ selectedOptions, onClose, isOpen
   useEffect(() => {
     const init = async function () {
       if (!selectedOptions) return;
-      setSelectedValue((await getSetting(selectedOptions.storeKey)) || '');
+      setSelectedValue((await getSetting(selectedOptions.storeKey)) || null);
     };
     init();
   }, [selectedOptions]);

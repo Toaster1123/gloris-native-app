@@ -4,7 +4,7 @@ import { getColors } from '@/constants';
 import { Text, TouchableOpacity } from 'react-native';
 interface Props {
   title: string;
-  selectedOption: string;
+  selectedOption: { name: string; value: string | null };
   onPress: () => void;
   isLoading?: boolean;
 }
@@ -23,7 +23,7 @@ export const SettingTitleBlock: React.FC<Props> = ({
     <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
       <Container propStyles={style.container}>
         <Text style={style.title}>{title}</Text>
-        <Text style={style.selectedText}>{selectedOption}</Text>
+        <Text style={style.selectedText}>{selectedOption.name}</Text>
       </Container>
     </TouchableOpacity>
   );

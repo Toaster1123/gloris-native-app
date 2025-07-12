@@ -1,14 +1,14 @@
-import { TColors } from '@/@types';
+import { TColors, TGroupModeValues, TThemeValues, TUserGroupValues } from '@/@types';
 import { FlatListIndicator } from '@fanchenbao/react-native-scroll-indicator';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SelectorListItem } from './selector-list-item';
 
 interface Props {
-  options: string[] | null;
+  options: (TThemeValues | TUserGroupValues | TGroupModeValues)[] | null;
   isOpen: boolean;
   handleSelect: (id: number) => void;
-  selectedValue: string;
+  selectedValue: { name: string; value: string | null } | null;
   scrollCollor: TColors['settingsSelected'];
 }
 
@@ -31,9 +31,9 @@ export const SelectorListRenderItems: React.FC<Props> = ({
             renderItem: ({ item, index }) => (
               <SelectorListItem
                 onPress={() => handleSelect(index)}
-                key={`${index + item}`}
-                title={item}
-                selectedOption={selectedValue === item}
+                key={`${index + item.value}`}
+                title={item.name}
+                selectedOption={selectedValue?.value === item.value}
               />
             ),
           }}

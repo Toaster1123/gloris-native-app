@@ -19,7 +19,6 @@ const { width } = Dimensions.get('window');
 const animateWidth = width / 2;
 export const PopupTextContainer: React.FC<Props> = ({ isOpenPopup }) => {
   const { settings } = useSettingsStore((state) => state);
-  console.log(settings);
 
   React.useEffect(() => {
     Animated.timing(slideAnim, {

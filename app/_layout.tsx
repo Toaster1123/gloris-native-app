@@ -6,7 +6,7 @@ import * as Font from 'expo-font';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { Host } from 'react-native-portalize';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
@@ -46,6 +46,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primary }}>
+        <StatusBar barStyle="light-content" backgroundColor={COLORS.primary} />
         <Host>
           <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
             <Header />

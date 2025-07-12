@@ -48,6 +48,7 @@ export const THEMES = {
 
 export const COLORS = THEMES.dark;
 export const getColors = () => {
-  const theme = useSettingsStore.getState().settings.theme;
-  return theme === 'Обычная' ? THEMES.default : THEMES.dark;
+  const theme = useSettingsStore.getState().settings;
+  console.log(theme);
+  return theme && theme.theme && theme.theme.value === 'default' ? THEMES.default : THEMES.dark;
 };

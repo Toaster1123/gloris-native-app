@@ -1,27 +1,25 @@
 import { TSettingsKeys, TSettingValueMap } from '@/@types';
+import { defaultSettings } from '@/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 
 type TSettingsStore = {
   settings: TSettingValueMap;
-  saveSetting: (key: TSettingsKeys, value: string) => Promise<void>;
-  getSetting: (key: TSettingsKeys) => Promise<string | null>;
+  saveSetting: (key: TSettingsKeys, value: { name: string; value: string | null }) => Promise<void>;
+  getSetting: (key: TSettingsKeys) => Promise<{ name: string; value: string | null } | null>;
   initSettings: () => Promise<void>;
 };
 
-const defaultValues: TSettingValueMap = {
-  theme: { name: 'Обычная', value: 'default' },
-  user_group: { name: 'Не выбранно', value: null },
-  group_mode: { name: 'Обычный', value: 'default' },
-};
-
-export const useSettingsStore = create<TSettingsStore>((set, get) => ({
-  settings: defaultValues,
-  saveSetting: async (key: TSettingsKeys, value: string) => {
+export const useSettingsStore = create<TSettingsStore>((set) => ({
+  settings: defaultSettings,
+  saveSetting: async (key: TSettingsKeys, value: { name: string; value: string | null }) => {
     try {
-      const savedValue = await AsyncStorage.getItem(key);
-      if (savedValue !== value) {
-        await AsyncStorage.setItem(key, value);
+      const savedStringValue = await AsyncStorage.getItem(key);
+      if (savedStringValue === null) return;
+      const savedValue = JSON.parse(savedStringValue);
+      if (savedValue.value !== value.value) {
+        const stringValue = JSON.stringify(value);
+        await AsyncStorage.setItem(key, stringValue);
         set((state) => ({
           settings: {
             ...state.settings,
@@ -35,7 +33,9 @@ export const useSettingsStore = create<TSettingsStore>((set, get) => ({
   },
   getSetting: async (key: TSettingsKeys) => {
     try {
-      return await AsyncStorage.getItem(key);
+      const stringValue = await AsyncStorage.getItem(key);
+      if (stringValue !== null) return JSON.parse(stringValue);
+      return null;
     } catch (error) {
       console.error('Ошибка при получении настройки', error);
       return null;
@@ -43,17 +43,18 @@ export const useSettingsStore = create<TSettingsStore>((set, get) => ({
   },
   initSettings: async () => {
     const settingsObj: Record<TSettingsKeys, { name: string; value: string | null }> = {
-      theme: defaultValues.theme,
-      user_group: defaultValues.user_group,
-      group_mode: defaultValues.group_mode,
+      theme: defaultSettings.theme,
+      user_group: defaultSettings.user_group,
+      group_mode: defaultSettings.group_mode,
     };
 
-    for (const key of Object.keys(defaultValues) as TSettingsKeys[]) {
-      const savedValue = await AsyncStorage.getItem(key);
-      if (savedValue !== null) {
-        settingsObj[key] = savedValue;
+    for (const key of Object.keys(defaultSettings) as TSettingsKeys[]) {
+      const savedString = await AsyncStorage.getItem(key);
+      if (savedString !== null) {
+        settingsObj[key] = JSON.parse(savedString);
       } else {
-        await AsyncStorage.setItem(key, settingsObj[key]);
+        const defaultValueString = JSON.stringify(settingsObj[key]);
+        await AsyncStorage.setItem(key, defaultValueString);
       }
     }
 
