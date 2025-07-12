@@ -1,4 +1,4 @@
-import { TSettingsKeys } from '@/@types';
+import TSettingsKeys from '@/@types';
 import { Container, SelectorListRenderItems } from '@/components';
 import { getColors } from '@/constants';
 import { useSettingsStore } from '@/store';

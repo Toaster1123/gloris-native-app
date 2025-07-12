@@ -1,6 +1,7 @@
 import { TListGroupName } from '@/@types';
 import { getColors } from '@/constants';
 import { useScheduleData } from '@/hooks';
+import { useSettingsStore } from '@/store';
 import React from 'react';
 import { Animated, Dimensions, ScrollView, View } from 'react-native';
 import { stylePopupTextContainer } from '../styles';
@@ -17,6 +18,9 @@ const duration = 200;
 const { width } = Dimensions.get('window');
 const animateWidth = width / 2;
 export const PopupTextContainer: React.FC<Props> = ({ isOpenPopup }) => {
+  const { settings } = useSettingsStore((state) => state);
+  console.log(settings);
+
   React.useEffect(() => {
     Animated.timing(slideAnim, {
       toValue: isOpenPopup ? 0 : -animateWidth,
@@ -32,7 +36,10 @@ export const PopupTextContainer: React.FC<Props> = ({ isOpenPopup }) => {
   scheduleData.forEach((group) => {
     const existingYear = groupedScheduleByYear.find((item) => item.year === group[0].course);
     if (existingYear) {
-      existingYear.groups.push({ groupId: group[0].id.toString(), groupName: group[0].title });
+      existingYear.groups.push({
+        groupId: group[0].id.toString(),
+        groupName: group[0].title,
+      });
     } else {
       groupedScheduleByYear.push({
         year: group[0].course,

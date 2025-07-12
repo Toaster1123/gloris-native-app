@@ -20,7 +20,7 @@ export const GroupScheduleItem: React.FC<Props> = ({
   const groupShortName = splitGroupName(groupName).groupShortName;
   const COLORS = getColors();
   return (
-    <Container propStyles={{ flex: 1 }}>
+    <Container propStyles={!isGroupPage && { flex: 1 }}>
       <View
         style={[
           {

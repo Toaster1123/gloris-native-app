@@ -1,4 +1,4 @@
-import { TSettingsKeys } from '@/@types';
+import TSettingsKeys from '@/@types';
 import { getColors } from '@/constants';
 import { useScheduleData } from '@/hooks';
 import { popupOverlayStore, useSettingsStore } from '@/store';

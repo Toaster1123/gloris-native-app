@@ -1,10 +1,16 @@
-import { DayOfWeek, DayOfWeekTitle, GroupScheduleItem, LoadingItem } from '@/components';
+import {
+  DayOfWeek,
+  DayOfWeekTitle,
+  GroupPageInfo,
+  GroupScheduleItem,
+  LoadingItem,
+} from '@/components';
 import { getColors } from '@/constants';
 import { useScheduleData } from '@/hooks';
 import { useHeaderTitleStore } from '@/store';
 import { useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback } from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 export default function GroupPage() {
   const COLORS = getColors();
@@ -26,7 +32,10 @@ export default function GroupPage() {
   }
   const [groupInfo, schedule] = scheduleData[0];
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ flex: 1, backgroundColor: COLORS.background }}
+      contentContainerStyle={{ flexGrow: 1 }}>
       <DayOfWeek />
       <DayOfWeekTitle />
       <GroupScheduleItem
@@ -35,6 +44,11 @@ export default function GroupPage() {
         schedule={schedule}
         groupId={groupInfo.id.toString()}
       />
-    </View>
+      <GroupPageInfo
+        course={groupInfo.course}
+        curator={groupInfo.curator}
+        speciality={groupInfo.speciality}
+      />
+    </ScrollView>
   );
 }

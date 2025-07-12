@@ -1,14 +1,13 @@
-import { getColors } from '@/constants';
-import { useScheduleData } from '@/hooks';
-import React from 'react';
-import { FlatList, RefreshControl, SafeAreaView, View } from 'react-native';
-import { LoadingItem } from '../loading-item';
-import { GroupScheduleItem } from './components';
+import { getColors } from "@/constants";
+import { useScheduleData } from "@/hooks";
+import React from "react";
+import { FlatList, RefreshControl, SafeAreaView, View } from "react-native";
+import { LoadingItem } from "../loading-item";
+import { GroupScheduleItem } from "./components";
 
 export const GroupSchedule = () => {
   const COLORS = getColors();
   const { isLoading, scheduleData, refetch } = useScheduleData();
-
   if (isLoading || !scheduleData) {
     return <LoadingItem />;
   }
@@ -16,7 +15,9 @@ export const GroupSchedule = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
       <FlatList
         contentContainerStyle={{ paddingTop: 12 }}
-        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }
         data={scheduleData}
         renderItem={({ item }) => (
           <GroupScheduleItem

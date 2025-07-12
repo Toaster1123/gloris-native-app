@@ -18,24 +18,18 @@ export const PopupGroupList: React.FC<TListGroupName> = ({ year, groups }) => {
     setIsPopupOpen(false);
   }, [pathname]);
 
+  React.useEffect(() => {
+    Animated.timing(heightAnim, {
+      toValue: isPopupOpen ? animateHeight : 0,
+      duration,
+      useNativeDriver: false,
+    }).start();
+  }, [isPopupOpen, animateHeight, duration, heightAnim]);
   const toglePopup = () => {
-    Animated.parallel([
-      Animated.timing(rotateAnim, {
-        toValue: isPopupOpen ? 0 : 1,
-        duration,
-        useNativeDriver: true,
-      }),
-      Animated.timing(heightAnim, {
-        toValue: !isPopupOpen ? animateHeight : 0,
-        duration,
-        useNativeDriver: false,
-      }),
-    ]).start();
     setIsPopupOpen((prev) => !prev);
   };
   const COLORS = getColors();
   const style = styleGropList(COLORS);
-
   return (
     <View>
       <TouchableOpacity activeOpacity={0.7} onPress={toglePopup} style={style.titleContainer}>

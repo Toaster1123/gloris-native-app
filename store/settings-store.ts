@@ -10,9 +10,9 @@ type TSettingsStore = {
 };
 
 const defaultValues: TSettingValueMap = {
-  theme: 'Темная',
-  user_group: 'Не выбранно',
-  group_mode: 'Обычный',
+  theme: { name: 'Обычная', value: 'default' },
+  user_group: { name: 'Не выбранно', value: null },
+  group_mode: { name: 'Обычный', value: 'default' },
 };
 
 export const useSettingsStore = create<TSettingsStore>((set, get) => ({
@@ -42,7 +42,7 @@ export const useSettingsStore = create<TSettingsStore>((set, get) => ({
     }
   },
   initSettings: async () => {
-    const settingsObj: Record<TSettingsKeys, string> = {
+    const settingsObj: Record<TSettingsKeys, { name: string; value: string | null }> = {
       theme: defaultValues.theme,
       user_group: defaultValues.user_group,
       group_mode: defaultValues.group_mode,

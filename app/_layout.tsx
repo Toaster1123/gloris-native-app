@@ -3,7 +3,7 @@ import { getColors } from '@/constants';
 import { useSettingsStore } from '@/store';
 import { Feather } from '@expo/vector-icons';
 import * as Font from 'expo-font';
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
@@ -49,7 +49,7 @@ export default function RootLayout() {
         <Host>
           <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
             <Header />
-            <Stack screenOptions={{ headerShown: false, statusBarStyle: 'light' }} />
+            <Slot />
             <PopupOverlay />
           </View>
         </Host>
