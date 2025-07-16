@@ -17,7 +17,7 @@ export const SettingTitleBlock: React.FC<Props> = ({
   const COLORS = getColors();
   const style = styleSettingsTitleBlock(COLORS);
   if (isLoading) {
-    return <LoadingPlaceholder propStyles={{ paddingVertical: 8 }} />;
+    return <LoadingPlaceholder propStyles={{ marginVertical: 8.8 }} />;
   }
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.7}>

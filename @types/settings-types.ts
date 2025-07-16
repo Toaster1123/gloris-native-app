@@ -1,6 +1,6 @@
 export type TSettingsKeys = 'theme' | 'group_mode' | 'user_group';
 export type TUserGroupValues =
-  | { name: 'Не выбранно'; value: null }
+  | { name: 'Не выбрано'; value: null }
   | { name: string; value: string };
 export type TGroupModeValues =
   | { name: 'Обычный'; value: 'default' }

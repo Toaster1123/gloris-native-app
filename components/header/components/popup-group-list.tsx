@@ -19,12 +19,19 @@ export const PopupGroupList: React.FC<TListGroupName> = ({ year, groups }) => {
   }, [pathname]);
 
   React.useEffect(() => {
-    Animated.timing(heightAnim, {
-      toValue: isPopupOpen ? animateHeight : 0,
-      duration,
-      useNativeDriver: false,
-    }).start();
-  }, [isPopupOpen, animateHeight, duration, heightAnim]);
+    Animated.parallel([
+      Animated.timing(heightAnim, {
+        toValue: isPopupOpen ? animateHeight : 0,
+        duration,
+        useNativeDriver: false,
+      }),
+      Animated.timing(rotateAnim, {
+        toValue: isPopupOpen ? 1 : 0,
+        duration,
+        useNativeDriver: false,
+      }),
+    ]).start();
+  }, [isPopupOpen, animateHeight, duration, heightAnim, rotateAnim]);
   const toglePopup = () => {
     setIsPopupOpen((prev) => !prev);
   };

@@ -2,7 +2,7 @@ import { TParams, TSettingValueMap } from '@/@types';
 
 export const defaultSettings: TSettingValueMap = {
   theme: { name: 'Обычная', value: 'default' },
-  user_group: { name: 'Не выбранно', value: null },
+  user_group: { name: 'Не выбрано', value: null },
   group_mode: { name: 'Обычный', value: 'default' },
 };
 
@@ -26,6 +26,6 @@ export const settingsParams: TParams[] = [
   {
     storeKey: 'user_group',
     title: 'Твоя группа',
-    options: [{ name: 'Не выбранно', value: null }],
+    options: [{ name: 'Не выбрано', value: null }],
   },
 ];

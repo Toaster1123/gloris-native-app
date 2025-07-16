@@ -1,1 +1,1 @@
-export type THrefLinks = '/';
+export type THrefLinks = '/' | `group/${string}`;

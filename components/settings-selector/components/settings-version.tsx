@@ -19,11 +19,10 @@ export const SettingsVersion = () => {
   });
   return (
     <TouchableOpacity
-      onPress={() => Linking.openURL('https://github.com/Toaster1123')}
+      onPress={() => Linking.openURL('https://github.com/Toaster1123/gloris-native-app')}
       activeOpacity={0.7}>
       <Container propStyles={style.versionContainer}>
         <Text style={style.versionText}>Github</Text>
-        <Text style={style.versionText}>1.0.0</Text>
       </Container>
     </TouchableOpacity>
   );

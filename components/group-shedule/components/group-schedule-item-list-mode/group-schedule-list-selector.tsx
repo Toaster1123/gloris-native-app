@@ -9,7 +9,7 @@ interface Props {
   schedule: TGroupSchedule;
 }
 export const GroupScheduleListSelector: React.FC<Props> = ({ groupShortName, schedule }) => {
-  const selectedMode = useSettingsStore.getState().settings.group_mode.value;
+  const selectedMode = useSettingsStore.getState().settings?.group_mode?.value;
 
   switch (selectedMode) {
     case 'advanced':

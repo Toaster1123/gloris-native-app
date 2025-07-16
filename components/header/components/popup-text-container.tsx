@@ -1,13 +1,9 @@
-import { TListGroupName } from '@/@types';
+import { AlertUserGroup } from '@/components/alert-user-group';
 import { getColors } from '@/constants';
-import { useScheduleData } from '@/hooks';
-import { useSettingsStore } from '@/store';
 import React from 'react';
-import { Animated, Dimensions, ScrollView, View } from 'react-native';
+import { Animated, BackHandler, Dimensions, ScrollView } from 'react-native';
 import { stylePopupTextContainer } from '../styles';
-import { LoadingPlaceholder } from './loading-placeholder';
-import { PopupGroupList } from './popup-group-list';
-import { PopupTextItem } from './popup-text-item';
+import { RenderBlocks } from './render-blocks';
 import { SettingsButton } from './settings-button';
 
 interface Props {
@@ -18,7 +14,14 @@ const duration = 200;
 const { width } = Dimensions.get('window');
 const animateWidth = width / 2;
 export const PopupTextContainer: React.FC<Props> = ({ isOpenPopup }) => {
-  const { settings } = useSettingsStore((state) => state);
+  const [showAlert, setShowAlert] = React.useState(false);
+  const slideAnim = React.useRef(new Animated.Value(-animateWidth)).current;
+  const COLORS = getColors();
+  const style = stylePopupTextContainer(COLORS);
+  const closeAlert = () => {
+    setShowAlert(false);
+    return true;
+  };
 
   React.useEffect(() => {
     Animated.timing(slideAnim, {
@@ -26,55 +29,33 @@ export const PopupTextContainer: React.FC<Props> = ({ isOpenPopup }) => {
       duration,
       useNativeDriver: true,
     }).start();
-  }, [isOpenPopup]);
+  }, [isOpenPopup, slideAnim]);
 
-  const slideAnim = React.useRef(new Animated.Value(-animateWidth)).current;
-  const { isLoading, scheduleData } = useScheduleData();
-  const groupedScheduleByYear: TListGroupName[] = [];
+  React.useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', closeAlert);
+    return () => {
+      BackHandler.addEventListener('hardwareBackPress', closeAlert);
+    };
+  }, []);
 
-  scheduleData.forEach((group) => {
-    const existingYear = groupedScheduleByYear.find((item) => item.year === group[0].course);
-    if (existingYear) {
-      existingYear.groups.push({
-        groupId: group[0].id.toString(),
-        groupName: group[0].title,
-      });
-    } else {
-      groupedScheduleByYear.push({
-        year: group[0].course,
-        groups: [{ groupId: group[0].id.toString(), groupName: group[0].title }],
-      });
-    }
-  });
-  const COLORS = getColors();
-  const style = stylePopupTextContainer(COLORS);
   return (
-    <Animated.View
-      style={[
-        style.container,
-        {
-          transform: [{ translateX: slideAnim }],
-          width: animateWidth,
-        },
-      ]}>
-      <ScrollView
-        contentContainerStyle={style.scrollContentContainer}
-        showsVerticalScrollIndicator={false}>
-        <View style={style.selectorContainer}>
-          <PopupTextItem href="/" text="Все группы" />
-          <PopupTextItem href="/" text="Твое расписание" />
-          <View style={style.yearBlock}>
-            {isLoading || groupedScheduleByYear.length === 0
-              ? Array(4)
-                  .fill(0)
-                  .map((_, id) => <LoadingPlaceholder key={id} />)
-              : groupedScheduleByYear.map((item, id) => (
-                  <PopupGroupList key={id} year={item.year} groups={item.groups} />
-                ))}
-          </View>
-        </View>
-        <SettingsButton />
-      </ScrollView>
-    </Animated.View>
+    <>
+      <Animated.View
+        style={[
+          style.container,
+          {
+            transform: [{ translateX: slideAnim }],
+            width: animateWidth,
+          },
+        ]}>
+        <ScrollView
+          contentContainerStyle={style.scrollContentContainer}
+          showsVerticalScrollIndicator={false}>
+          <RenderBlocks showAlert={() => setShowAlert(true)} />
+          <SettingsButton />
+        </ScrollView>
+      </Animated.View>
+      {showAlert && <AlertUserGroup onClose={() => setShowAlert(false)} />}
+    </>
   );
 };

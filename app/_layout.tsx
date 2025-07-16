@@ -19,7 +19,6 @@ export default function RootLayout() {
 
   useEffect(() => {
     initSettings();
-
     async function loadFonts() {
       try {
         await Font.loadAsync({

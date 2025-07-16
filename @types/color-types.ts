@@ -6,6 +6,7 @@ export type TColors = {
   dateBackground: string;
   dateBorder: string;
   dateSelectedText: string;
+  dateUnSelectedText: string;
   dayTextColor: string;
   dayPrimary: Record<string, string>;
   groupTitle: Record<string, string>;
@@ -15,4 +16,7 @@ export type TColors = {
   settingsSelected: string;
   settungsBackground: string;
   settingsContainer: string;
+  loadingHeader: string;
+  loadingSchedule: string;
+  loadingText: string;
 };

@@ -11,6 +11,7 @@ const defaultTheme: TColors = {
   dateBackground: '#5c8c6f',
   dateBorder: '#5c8c6f',
   dateSelectedText: '#edeef0',
+  dateUnSelectedText: '#5c8c6f',
   dayTextColor: '#50494f',
   dayPrimary: dafaultThemeDayPrimary,
   groupTitle: defaultThemeGroupPrimary,
@@ -20,6 +21,9 @@ const defaultTheme: TColors = {
   settingsSelected: '#5d5d5d',
   settungsBackground: '#cfcfcf',
   settingsContainer: '#edeef0',
+  loadingHeader: '#acacac',
+  loadingSchedule: '#dadada',
+  loadingText: '#f4f4f4',
 };
 
 const darkTheme: TColors = {
@@ -30,6 +34,7 @@ const darkTheme: TColors = {
   dateBackground: '#3a3a3a',
   dateBorder: '#3a3a3a',
   dateSelectedText: '#E5E4E4',
+  dateUnSelectedText: '#bbbbbb',
   dayTextColor: '#D7D7D7',
   dayPrimary: darkThemeDayPrimary,
   groupTitle: darkThemeGroupPrimary,
@@ -39,6 +44,9 @@ const darkTheme: TColors = {
   settingsSelected: '#898989',
   settungsBackground: '#101010',
   settingsContainer: '#1c1c1c',
+  loadingHeader: '#292929',
+  loadingSchedule: '#1c1c1c',
+  loadingText: '#4b4b4b',
 };
 
 export const THEMES = {
@@ -48,7 +56,7 @@ export const THEMES = {
 
 export const COLORS = THEMES.dark;
 export const getColors = () => {
-  const theme = useSettingsStore.getState().settings;
-  console.log(theme);
-  return theme && theme.theme && theme.theme.value === 'default' ? THEMES.default : THEMES.dark;
+  const store = useSettingsStore.getState();
+  const theme = store.settings?.theme?.value;
+  return theme === 'dark' ? THEMES.dark : THEMES.default;
 };

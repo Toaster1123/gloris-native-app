@@ -1,21 +1,12 @@
-import { getColors } from "@/constants";
-import { AntDesign as Icon } from "@expo/vector-icons";
-import { useEffect, useRef } from "react";
-import {
-  Animated,
-  Easing,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from "react-native";
+import { AntDesign as Icon } from '@expo/vector-icons';
+import { useEffect, useRef } from 'react';
+import { Animated, Easing, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 interface Props {
   propStyles?: StyleProp<ViewStyle>;
 }
 
 export const LoadingPlaceholder: React.FC<Props> = ({ propStyles }) => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
-
   useEffect(() => {
     Animated.loop(
       Animated.timing(rotateAnim, {
@@ -28,15 +19,15 @@ export const LoadingPlaceholder: React.FC<Props> = ({ propStyles }) => {
   }, []);
   const rotate = rotateAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
+    outputRange: ['0deg', '360deg'],
   });
   const style = StyleSheet.create({
     loadingPlaceholder: {
       height: 40,
       marginVertical: 4,
       borderRadius: 8,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 

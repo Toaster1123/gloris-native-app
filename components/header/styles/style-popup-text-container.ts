@@ -13,15 +13,8 @@ export const stylePopupTextContainer = (COLORS: TColors) => {
       flexDirection: 'column',
     },
     scrollContentContainer: {
-      height: '100%',
+      flexGrow: 1,
       justifyContent: 'space-between',
-    },
-    selectorContainer: {
-      gap: 6,
-      padding: 8,
-    },
-    yearBlock: {
-      gap: 6,
     },
   });
 };

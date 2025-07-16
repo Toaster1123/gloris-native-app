@@ -21,7 +21,7 @@ export const DayOfWeekItem: React.FC<Props> = ({ isSelected = false, day }) => {
       paddingVertical: 6,
       paddingHorizontal: 12,
       fontSize: 16,
-      color: isSelected ? COLORS.dateSelectedText : COLORS.dateBorder,
+      color: isSelected ? COLORS.dateSelectedText : COLORS.dateUnSelectedText,
     },
   });
 

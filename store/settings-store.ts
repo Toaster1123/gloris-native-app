@@ -42,22 +42,28 @@ export const useSettingsStore = create<TSettingsStore>((set) => ({
     }
   },
   initSettings: async () => {
-    const settingsObj: Record<TSettingsKeys, { name: string; value: string | null }> = {
+    const settingsObj: TSettingValueMap = {
+      group_mode: defaultSettings.group_mode,
       theme: defaultSettings.theme,
       user_group: defaultSettings.user_group,
-      group_mode: defaultSettings.group_mode,
     };
 
     for (const key of Object.keys(defaultSettings) as TSettingsKeys[]) {
-      const savedString = await AsyncStorage.getItem(key);
-      if (savedString !== null) {
-        settingsObj[key] = JSON.parse(savedString);
+      const savedValue = await AsyncStorage.getItem(key);
+
+      if (savedValue !== null) {
+        try {
+          const parsed = JSON.parse(savedValue);
+          settingsObj[key] = parsed;
+        } catch (error) {
+          console.warn(`Ошибка парсинга настройки ${key}:`, error);
+          settingsObj[key] = defaultSettings[key];
+        }
       } else {
-        const defaultValueString = JSON.stringify(settingsObj[key]);
-        await AsyncStorage.setItem(key, defaultValueString);
+        await AsyncStorage.setItem(key, JSON.stringify(settingsObj[key]));
       }
     }
 
-    set({ settings: settingsObj as TSettingValueMap });
+    set({ settings: settingsObj });
   },
 }));
