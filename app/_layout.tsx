@@ -45,7 +45,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primary }}>
-        <StatusBar barStyle="light-content" backgroundColor={COLORS.primary} />
+        <StatusBar barStyle="light-content" />
         <Host>
           <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
             <Header />
