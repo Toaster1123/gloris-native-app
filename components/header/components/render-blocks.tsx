@@ -25,12 +25,11 @@ export const RenderBlocks: React.FC<Props> = ({ showAlert }) => {
       gap: 6,
     },
   });
-
   return (
     <View style={style.selectorContainer}>
       <PopupTextItem href="/" text="Все группы" />
       <PopupTextItem
-        onPress={showAlert}
+        onPress={!groupId ? showAlert : undefined}
         href={groupId ? `group/${groupId}` : undefined}
         text="Твое расписание"
       />

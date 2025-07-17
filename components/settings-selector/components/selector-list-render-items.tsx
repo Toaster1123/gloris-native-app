@@ -1,7 +1,6 @@
 import { TColors, TGroupModeValues, TThemeValues, TUserGroupValues } from '@/@types';
 import { FlatListIndicator } from '@fanchenbao/react-native-scroll-indicator';
 import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SelectorListItem } from './selector-list-item';
 
 interface Props {
@@ -19,9 +18,8 @@ export const SelectorListRenderItems: React.FC<Props> = ({
   handleSelect,
   scrollCollor,
 }) => {
-  const insets = useSafeAreaInsets();
   return (
-    <View style={{ marginBottom: options && options.length > 5 ? insets.bottom : 0 }}>
+    <View style={{ marginBottom: options && options.length > 5 ? 48 : 0 }}>
       {options && isOpen && (
         <FlatListIndicator
           indStyle={{ backgroundColor: scrollCollor, width: 4 }}

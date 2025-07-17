@@ -10,6 +10,7 @@ export const useScheduleData = (groupId?: string) => {
   const { dayIndexChoise } = useDayChoseStore((state) => state);
   const fetchData = React.useCallback(async () => {
     setIsLoading(true);
+    setScheduleData([]);
     try {
       const data = await fetchScheduleData({
         day: dayIndexChoise.toString(),

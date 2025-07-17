@@ -14,9 +14,13 @@ export const SettingsSelector: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<TParams | null>(null);
   const { isActiveOverlay, closeOverlay, openOverlay } = popupOverlayStore((state) => state);
   const { settings } = useSettingsStore();
-  scheduleData.forEach((item) =>
-    settingsParams[2].options.push({ name: item[0].title, value: item[0].id.toString() }),
-  );
+  useEffect(() => {
+    if (settingsParams[2].options.length < scheduleData.length + 1) {
+      scheduleData.forEach((item) =>
+        settingsParams[2].options.push({ name: item[0].title, value: item[0].id.toString() }),
+      );
+    }
+  }, [isLoading, scheduleData]);
 
   const handlePress = (id: number) => {
     openOverlay();
