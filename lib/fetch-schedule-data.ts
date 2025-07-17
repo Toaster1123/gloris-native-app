@@ -7,7 +7,6 @@ import {
   TScheduleKeys,
 } from '@/@types';
 import Constants from 'expo-constants';
-import { Alert } from 'react-native';
 
 const { SCHEDULE_URL, URL_KEY } = Constants.expoConfig?.extra || {};
 
@@ -30,11 +29,9 @@ export const fetchScheduleData = async ({ group, day }: { group?: string; day?: 
       const scheduleArray: TGroupSchedule = scheduleKeys.map((key) => scheduleObj[key]);
       return [groupInfo, scheduleArray];
     });
-    return scheduleData;
+    return { scheduleData, error: false };
   } catch (error) {
-    const err: Error = error as Error;
-    Alert.alert('Произошла ошибка', err.message);
-    console.error(error);
-    return [];
+    console.warn(error);
+    return { scheduleData: [], error: true };
   }
 };

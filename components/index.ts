@@ -4,6 +4,7 @@ export * from './day-of-week';
 export * from './group-page-info';
 export * from './group-shedule';
 export * from './header';
+export * from './layout';
 export { LoadingGroupInfo } from './loading-group-info';
 export { LoadingItem } from './loading-item';
 export * from './popup-overlay';

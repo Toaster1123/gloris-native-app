@@ -1,58 +1,46 @@
-import { Header, PopupOverlay } from '@/components';
+import { LayoutWrapper } from '@/components';
 import { getColors } from '@/constants';
 import { useSettingsStore } from '@/store';
-import { Feather } from '@expo/vector-icons';
-import * as Font from 'expo-font';
-import { Slot } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import React, { useCallback, useEffect, useState } from 'react';
-import { StatusBar, View } from 'react-native';
-import { Host } from 'react-native-portalize';
+import * as ScreenOrientation from 'expo-screen-orientation';
+import React, { useEffect } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-
-SplashScreen.preventAutoHideAsync();
+// import Toast from 'react-native-toast-message';
+import NetInfo from '@react-native-community/netinfo';
 
 export default function RootLayout() {
   const COLORS = getColors();
-  const [fontsLoaded, setFontsLoaded] = useState(false);
   const { initSettings } = useSettingsStore();
-
-  useEffect(() => {
-    initSettings();
-    async function loadFonts() {
-      try {
-        await Font.loadAsync({
-          ...Feather.font,
-        });
-      } catch (e) {
-        console.warn('Ошибка при загрузке шрифтов:', e);
-      } finally {
-        setFontsLoaded(true);
-        SplashScreen.hideAsync();
-      }
+  const checkInternetConnection = async () => {
+    try {
+      const state = await NetInfo.fetch();
+      console.log('Интернет доступен:', state.isConnected);
+      return state.isConnected;
+    } catch (error) {
+      console.error('Ошибка проверки подключения:', error);
+      return false;
     }
+  };
+  checkInternetConnection();
+  useEffect(() => {
+    const lockOrientation = async () => {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+    };
 
-    loadFonts();
+    lockOrientation();
+    initSettings();
+
+    return () => {
+      const unlockOrientation = async () => {
+        await ScreenOrientation.unlockAsync();
+      };
+      unlockOrientation();
+    };
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) return null;
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primary }}>
-        <StatusBar barStyle="light-content" />
-        <Host>
-          <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-            <Header />
-            <Slot />
-            <PopupOverlay />
-          </View>
-        </Host>
+        <LayoutWrapper />
       </SafeAreaView>
     </SafeAreaProvider>
   );

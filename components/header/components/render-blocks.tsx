@@ -11,7 +11,7 @@ interface Props {
   showAlert: () => void;
 }
 export const RenderBlocks: React.FC<Props> = ({ showAlert }) => {
-  const groupId = useSettingsStore((state) => state.settings.user_group.value);
+  const groupId = useSettingsStore((state) => state.settings?.user_group?.value);
   const { isLoading, scheduleData } = useScheduleData();
   const groupedSchedule = sortScheduleByYear(scheduleData);
   const COLORS = getColors();

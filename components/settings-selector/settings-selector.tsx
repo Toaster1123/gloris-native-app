@@ -9,18 +9,38 @@ import { Container } from '../container';
 import { SelectorList, SettingTitleBlock } from './components';
 
 export const SettingsSelector: React.FC = () => {
-  const { scheduleData, isLoading } = useScheduleData();
+  const { scheduleData, isLoading, error } = useScheduleData();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<TParams | null>(null);
   const { isActiveOverlay, closeOverlay, openOverlay } = popupOverlayStore((state) => state);
   const { settings } = useSettingsStore();
   useEffect(() => {
-    if (settingsParams[2].options.length < scheduleData.length + 1) {
-      scheduleData.forEach((item) =>
-        settingsParams[2].options.push({ name: item[0].title, value: item[0].id.toString() }),
-      );
+    if (!settingsParams[2] || !settingsParams[2].options) return;
+
+    settingsParams[2].options = [];
+
+    if (error) {
+      settingsParams[2].options.push({
+        name: 'Не выбрано',
+        value: null,
+      });
+
+      if (settings.user_group.value !== null) {
+        settingsParams[2].options.push({
+          name: settings.user_group.name,
+          value: settings.user_group.value,
+        });
+      }
+    } else if (scheduleData) {
+      settingsParams[2].options = [
+        { name: 'Не выбрано', value: null },
+        ...scheduleData.map((item) => ({
+          name: item[0].title,
+          value: item[0].id.toString(),
+        })),
+      ];
     }
-  }, [isLoading, scheduleData]);
+  }, [isLoading, scheduleData, error, settings]);
 
   const handlePress = (id: number) => {
     openOverlay();

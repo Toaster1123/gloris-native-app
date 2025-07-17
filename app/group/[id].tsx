@@ -17,13 +17,13 @@ export default function GroupPage() {
   const COLORS = getColors();
   const params = useLocalSearchParams();
   const id = params?.id as string | undefined;
-  const { scheduleData, isLoading, refetch } = useScheduleData(id);
+  const { scheduleData, isLoading, refetch, error } = useScheduleData(id);
 
   const setTitle = useHeaderTitleStore((state) => state.setTitle);
   useFocusEffect(
     useCallback(() => {
       const title =
-        scheduleData && scheduleData.length > 0
+        !isLoading && scheduleData.length > 0 && !error
           ? `Расписание группы ${scheduleData?.[0][0]?.title}`
           : undefined;
       setTitle(title);
@@ -38,7 +38,7 @@ export default function GroupPage() {
       refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}>
       <DayOfWeek />
       <DayOfWeekTitle />
-      {isLoading || !scheduleData || !id ? (
+      {isLoading || error || scheduleData.length === 0 ? (
         <View style={{ marginTop: 12 }}>
           <LoadingItem />
           <LoadingGroupInfo />

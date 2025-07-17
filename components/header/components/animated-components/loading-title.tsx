@@ -7,7 +7,7 @@ import { styleLoadingTitle } from '../../styles';
 const duration = 1100;
 export const LoadingTitle = () => {
   const loadingOpacity = useRef(new Animated.Value(0.9)).current;
-  const title = useHeaderTitleStore((state) => state.title);
+  const { title } = useHeaderTitleStore((state) => state);
 
   useEffect(() => {
     Animated.loop(
