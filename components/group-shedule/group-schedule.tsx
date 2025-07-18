@@ -1,16 +1,18 @@
 import { getColors } from '@/constants';
 import { useScheduleData } from '@/hooks';
 import React from 'react';
-import { FlatList, RefreshControl, SafeAreaView, ScrollView, View } from 'react-native';
+import { FlatList, RefreshControl, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { LoadingItem } from '../loading-item';
 import { GroupScheduleItem } from './components';
 
 export const GroupSchedule = () => {
   const COLORS = getColors();
+
   const { isLoading, scheduleData, refetch, error } = useScheduleData();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
-      {isLoading || !scheduleData || error ? (
+      <Text style={{ color: 'white' }}>{`${error} ${isLoading}`}</Text>
+      {isLoading || scheduleData.length === 0 || error ? (
         <ScrollView
           contentContainerStyle={{ gap: 24 }}
           scrollEnabled={false}

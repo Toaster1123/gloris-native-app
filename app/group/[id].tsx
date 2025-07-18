@@ -11,7 +11,7 @@ import { useScheduleData } from '@/hooks';
 import { useHeaderTitleStore } from '@/store';
 import { useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback } from 'react';
-import { RefreshControl, ScrollView, View } from 'react-native';
+import { RefreshControl, ScrollView, Text, View } from 'react-native';
 
 export default function GroupPage() {
   const COLORS = getColors();
@@ -37,6 +37,7 @@ export default function GroupPage() {
       contentContainerStyle={{ flexGrow: 1 }}
       refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}>
       <DayOfWeek />
+      <Text style={{ color: 'white' }}>{`${error} ${isLoading}`}</Text>
       <DayOfWeekTitle />
       {isLoading || error || scheduleData.length === 0 ? (
         <View style={{ marginTop: 12 }}>

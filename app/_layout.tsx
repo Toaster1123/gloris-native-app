@@ -1,6 +1,6 @@
 import { LayoutWrapper } from '@/components';
 import { getColors } from '@/constants';
-import { useSettingsStore } from '@/store';
+import { useInternetConnecter, useSettingsStore } from '@/store';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import React, { useEffect } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -10,17 +10,17 @@ import NetInfo from '@react-native-community/netinfo';
 export default function RootLayout() {
   const COLORS = getColors();
   const { initSettings } = useSettingsStore();
-  const checkInternetConnection = async () => {
-    try {
-      const state = await NetInfo.fetch();
-      console.log('Интернет доступен:', state.isConnected);
-      return state.isConnected;
-    } catch (error) {
-      console.error('Ошибка проверки подключения:', error);
-      return false;
-    }
-  };
-  checkInternetConnection();
+  const { setIsConnected, isConnected } = useInternetConnecter((state) => state);
+  React.useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsConnected(state.isConnected);
+      console.log('Connection type', state.type);
+      console.log('Is connected?', state.isConnected);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   useEffect(() => {
     const lockOrientation = async () => {
       await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
@@ -41,6 +41,9 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primary }}>
         <LayoutWrapper />
+        {/* <Text style={{ color: 'white' }}>
+          <Text>{isConnected ? 'Online' : 'Offline'}</Text>
+        </Text> */}
       </SafeAreaView>
     </SafeAreaProvider>
   );

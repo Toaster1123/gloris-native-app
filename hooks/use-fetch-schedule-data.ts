@@ -1,11 +1,12 @@
 import { TScheduleData } from '@/@types';
 import { fetchScheduleData } from '@/lib';
-import { useDayChoseStore } from '@/store';
+import { useDayChoseStore, useInternetConnecter } from '@/store';
 import React from 'react';
 
 export const useScheduleData = (groupId?: string) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
+  const { isConnected } = useInternetConnecter((state) => state);
 
   const [scheduleData, setScheduleData] = React.useState<TScheduleData[]>([]);
   const { dayIndexChoise } = useDayChoseStore((state) => state);
@@ -29,8 +30,12 @@ export const useScheduleData = (groupId?: string) => {
   }, [dayIndexChoise, groupId]);
 
   React.useEffect(() => {
-    fetchData();
-  }, [dayIndexChoise]);
+    if (isConnected) {
+      fetchData();
+    } else {
+      setIsLoading(false);
+    }
+  }, [dayIndexChoise, isConnected]);
 
   return { scheduleData, isLoading, refetch: fetchData, error };
 };
