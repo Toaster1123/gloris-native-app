@@ -33,7 +33,6 @@ export default function GroupPage() {
   return (
     <>
       <DayOfWeek />
-      {/* <Text style={{ color: 'white' }}>{`${error} ${isLoading}`}</Text> */}
       <DayOfWeekTitle />
       <ScrollView
         showsVerticalScrollIndicator={false}

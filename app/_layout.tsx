@@ -4,6 +4,7 @@ import { useInternetConnecter, useSettingsStore } from '@/store';
 import NetInfo from '@react-native-community/netinfo';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import React, { useEffect } from 'react';
+import { View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 export default function RootLayout() {
@@ -31,7 +32,9 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primary }}>
-        <LayoutWrapper />
+        <View style={{ flex: 1, backgroundColor: COLORS.background }}>
+          <LayoutWrapper />
+        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );

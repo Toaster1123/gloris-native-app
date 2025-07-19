@@ -2,7 +2,7 @@ import { getColors } from '@/constants';
 import { useScheduleData } from '@/hooks';
 import React from 'react';
 import { FlatList, RefreshControl, SafeAreaView, View } from 'react-native';
-import { LoadingItem } from '../loading-item';
+import { LoadingItem } from '../loading-group/loading-item';
 import { GroupScheduleItem } from './components';
 
 export const GroupSchedule = () => {

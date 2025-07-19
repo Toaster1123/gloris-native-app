@@ -1,14 +1,11 @@
 import { getColors } from '@/constants';
 import { StyleSheet, View } from 'react-native';
-import { Container } from './container';
+import { Container } from '../container';
 
 export const LoadingItem = () => {
   const COLORS = getColors();
 
   const style = StyleSheet.create({
-    loadingBlock: {
-      // backgroundColor: COLORS.background,
-    },
     header: {
       backgroundColor: COLORS.loadingHeader,
       height: 48,
@@ -36,7 +33,7 @@ export const LoadingItem = () => {
     },
   });
   return (
-    <View style={style.loadingBlock}>
+    <View>
       <Container>
         <View style={style.header}>
           <View style={style.headerTitle} />

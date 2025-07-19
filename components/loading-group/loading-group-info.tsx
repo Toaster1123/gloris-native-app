@@ -1,7 +1,6 @@
 import { getColors } from '@/constants';
 import { View } from 'react-native';
-import { Container } from './container';
-
+import { Container } from '../container';
 export const LoadingGroupInfo = () => {
   const COLORS = getColors();
 
