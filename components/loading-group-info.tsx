@@ -15,7 +15,7 @@ export const LoadingGroupInfo = () => {
             style={{
               height: 22,
               width: '75%',
-              backgroundColor: COLORS.loadingText,
+              backgroundColor: COLORS.loadingGroupInfo,
               borderRadius: 10,
             }}
           />

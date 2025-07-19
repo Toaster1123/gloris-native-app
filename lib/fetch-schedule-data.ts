@@ -29,9 +29,9 @@ export const fetchScheduleData = async ({ group, day }: { group?: string; day?: 
       const scheduleArray: TGroupSchedule = scheduleKeys.map((key) => scheduleObj[key]);
       return [groupInfo, scheduleArray];
     });
-    return { scheduleData, error: false };
+    return { scheduleData, fetchError: false };
   } catch (error) {
     console.warn(error);
-    return { scheduleData: [], error: true };
+    return { scheduleData: [], fetchError: true };
   }
 };

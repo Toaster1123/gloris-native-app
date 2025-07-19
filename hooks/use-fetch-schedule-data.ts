@@ -5,7 +5,7 @@ import React from 'react';
 
 export const useScheduleData = (groupId?: string) => {
   const [isLoading, setIsLoading] = React.useState(true);
-  const [error, setError] = React.useState(false);
+  const [error, setError] = React.useState(true);
   const { isConnected } = useInternetConnecter((state) => state);
 
   const [scheduleData, setScheduleData] = React.useState<TScheduleData[]>([]);
@@ -15,15 +15,17 @@ export const useScheduleData = (groupId?: string) => {
     setError(false);
     setScheduleData([]);
     try {
-      const { scheduleData, error } = await fetchScheduleData({
+      const { scheduleData, fetchError } = await fetchScheduleData({
         day: dayIndexChoise.toString(),
         group: groupId,
       });
+
       setScheduleData(scheduleData);
-      setError(error);
+
+      setError(fetchError);
     } catch (errorMsg) {
       console.warn(errorMsg);
-      setError(error);
+      setError(true);
     } finally {
       setIsLoading(false);
     }

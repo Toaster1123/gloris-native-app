@@ -19,4 +19,5 @@ export type TColors = {
   loadingHeader: string;
   loadingSchedule: string;
   loadingText: string;
+  loadingGroupInfo: string;
 };

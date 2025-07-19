@@ -7,10 +7,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Host } from 'react-native-portalize';
 import { Header } from '../header';
+import { OfflineAlert } from '../offline-alert';
 import { PopupOverlay } from '../popup-overlay';
 
 export const LayoutWrapper = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+
   useEffect(() => {
     async function loadFonts() {
       try {
@@ -44,6 +46,7 @@ export const LayoutWrapper = () => {
           <PopupOverlay />
         </View>
       </Host>
+      <OfflineAlert />
     </>
   );
 };

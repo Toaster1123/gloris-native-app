@@ -24,6 +24,7 @@ const defaultTheme: TColors = {
   loadingHeader: '#acacac',
   loadingSchedule: '#dadada',
   loadingText: '#f4f4f4',
+  loadingGroupInfo: '#dadada',
 };
 
 const darkTheme: TColors = {
@@ -47,6 +48,7 @@ const darkTheme: TColors = {
   loadingHeader: '#292929',
   loadingSchedule: '#1c1c1c',
   loadingText: '#4b4b4b',
+  loadingGroupInfo: '#4b4b4b',
 };
 
 export const THEMES = {
