@@ -1,4 +1,4 @@
-import { SettingsSelector, SettingsVersion } from '@/components';
+import { SettingsSelector, SettingsVersion } from '@/components/settings-selector';
 import { getColors } from '@/constants';
 import { useHeaderTitleStore, useSettingsStore } from '@/store';
 import { useFocusEffect } from 'expo-router';
