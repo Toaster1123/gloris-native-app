@@ -28,21 +28,17 @@ export const GroupSchedule = () => {
             schedule={item[1]}
           />
         )}
-        ListEmptyComponent={() => {
-          if (isLoading || scheduleData.length === 0 || error) {
-            return (
-              <>
-                <LoadingItem />
-                <LoadingItem />
-              </>
-            );
-          }
-        }}
+        ListEmptyComponent={() => (
+          <View style={{ gap: 24 }}>
+            <LoadingItem />
+            <LoadingItem />
+          </View>
+        )}
         ListFooterComponent={() => <View style={{ height: 30 }} />}
         ItemSeparatorComponent={() => <View style={{ height: 24 }} />}
         keyExtractor={(item) => item[0].id.toString()}
+        scrollEnabled={!!(scheduleData && scheduleData.length > 0 && !error)}
       />
-      {/* )} */}
     </SafeAreaView>
   );
 };

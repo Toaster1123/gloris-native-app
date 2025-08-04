@@ -1,5 +1,5 @@
 import { TParams } from '@/@types';
-import { Container, SelectorListRenderItems } from '@/components';
+import { Container } from '@/components/container';
 import { getColors } from '@/constants';
 import { useSettingsStore } from '@/store';
 import { EvilIcons as Icon } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, Easing, Text, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styleSelectorList } from '../styles';
+import { SelectorListRenderItems } from './selector-list-render-items';
 
 interface Props {
   selectedOptions: TParams | null;

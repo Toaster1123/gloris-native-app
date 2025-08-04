@@ -1,7 +1,8 @@
-import { Container, styleSettingsTitleBlock } from '@/components';
+import { Container } from '@/components/container';
 import { LoadingPlaceholder } from '@/components/header/components/loading-placeholder';
 import { getColors } from '@/constants';
 import { Text, TouchableOpacity } from 'react-native';
+import { styleSettingsTitleBlock } from '../styles';
 interface Props {
   title: string;
   selectedOption: { name: string; value: string | null };
