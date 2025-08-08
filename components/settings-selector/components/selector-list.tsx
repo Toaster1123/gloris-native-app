@@ -55,7 +55,6 @@ export const SelectorList: React.FC<Props> = ({ selectedOptions, onClose, isOpen
         style.container,
         {
           transform: [{ translateY: slideAnim }],
-          marginBottom: insets.bottom,
           maxHeight: screenHeight / 1.5,
         },
       ]}>

@@ -5,6 +5,7 @@ import { create } from 'zustand';
 
 type TSettingsStore = {
   settings: TSettingValueMap;
+  isSettingLoaded: boolean;
   saveSetting: (key: TSettingsKeys, value: { name: string; value: string | null }) => Promise<void>;
   getSetting: (key: TSettingsKeys) => Promise<{ name: string; value: string | null } | null>;
   initSettings: () => Promise<void>;
@@ -12,6 +13,7 @@ type TSettingsStore = {
 
 export const useSettingsStore = create<TSettingsStore>((set) => ({
   settings: defaultSettings,
+  isSettingLoaded: false,
   saveSetting: async (key: TSettingsKeys, value: { name: string; value: string | null }) => {
     try {
       const savedStringValue = await AsyncStorage.getItem(key);
@@ -64,6 +66,6 @@ export const useSettingsStore = create<TSettingsStore>((set) => ({
       }
     }
 
-    set({ settings: settingsObj });
+    set({ settings: settingsObj, isSettingLoaded: true });
   },
 }));
