@@ -5,7 +5,6 @@ import { useSettingsStore } from '@/store';
 import { EvilIcons as Icon } from '@expo/vector-icons';
 import { useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, Easing, Text, TouchableOpacity } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styleSelectorList } from '../styles';
 import { SelectorListRenderItems } from './selector-list-render-items';
 
@@ -21,7 +20,6 @@ export const SelectorList: React.FC<Props> = ({ selectedOptions, onClose, isOpen
   );
   const screenHeight = Dimensions.get('window').height;
   const slideAnim = useRef(new Animated.Value(screenHeight)).current;
-  const insets = useSafeAreaInsets();
   const { getSetting, saveSetting } = useSettingsStore();
 
   useEffect(() => {
@@ -30,7 +28,7 @@ export const SelectorList: React.FC<Props> = ({ selectedOptions, onClose, isOpen
       setSelectedValue((await getSetting(selectedOptions.storeKey)) || null);
     };
     init();
-  }, [selectedOptions]);
+  }, [selectedOptions, getSetting]);
 
   const handleSelect = (id: number) => {
     if (selectedOptions) {

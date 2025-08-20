@@ -3,11 +3,15 @@ import { StyleSheet } from 'react-native';
 export const styleSettingsButton = (COLORS: TColors) => {
   return StyleSheet.create({
     container: {
-      width: '100%',
+      // width: '100%',
+      borderColor: 'red',
+      borderWidth: 1,
     },
     settingsContainer: {
-      width: '100%',
+      // width: '100%',
       flexDirection: 'row',
+      borderColor: 'green',
+      borderWidth: 1,
       gap: 12,
       paddingVertical: 12,
       paddingHorizontal: 8,
