@@ -1,11 +1,9 @@
 import { DayOfWeek, DayOfWeekTitle, GroupSchedule } from '@/components';
 import { useHeaderTitleStore, useSettingsStore } from '@/store';
 import { useFocusEffect, useRouter } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
 
-SplashScreen.preventAutoHideAsync();
 export default function Index() {
   const { setTitle } = useHeaderTitleStore((state) => state);
   const { settings, getSetting, isSettingLoaded } = useSettingsStore((state) => state);
@@ -21,12 +19,10 @@ export default function Index() {
         } catch (error) {
           console.error('Ошибка при проверке настройки:', error);
         } finally {
-          await SplashScreen.hideAsync();
         }
       })();
     }
-    console.log(getSetting('user_group'), isSettingLoaded);
-  }, [isSettingLoaded, settings, router]);
+  }, [isSettingLoaded, settings, router, getSetting]);
 
   useFocusEffect(
     useCallback(() => {

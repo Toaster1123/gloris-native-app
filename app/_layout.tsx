@@ -3,9 +3,11 @@ import { getColors } from '@/constants';
 import { useInternetConnecter, useSettingsStore } from '@/store';
 import NetInfo from '@react-native-community/netinfo';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const COLORS = getColors();
